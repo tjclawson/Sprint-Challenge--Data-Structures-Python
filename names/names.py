@@ -21,6 +21,14 @@ for name_2 in names_2:
     if tree.contains(name_2):
         duplicates.append(name_2)
 
+# original runtime was O(n^2) (technically O(x * y), assuming x and y have similar length it is approximately O(n^2))
+# because for each name in name_1, it looped all the way through name_2. The new solution has a run time that
+# technically is also O(n^2) as well because the worst case for a binary tree search is O(n), but that is assuming that
+# the tree is fully unbalanced. But initializing the tree with "middle" as the root (m is the middle name of the
+# alphabet) and assuming starting letters of names are evenly distrubted, our tree should be roughly balanced or
+# complete, giving a search time of log n. Therefore since we loop through name_1 to add all names to the tree, runtime
+# of n, and then search the approximately balanced tree, log n, our final runtime is O(n log n)
+
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
