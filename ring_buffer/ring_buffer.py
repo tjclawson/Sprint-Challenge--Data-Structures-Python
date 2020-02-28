@@ -38,10 +38,28 @@ class RingBuffer:
 
 class ArrayRingBuffer:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
+        self.current_index = 0
+        # Boolean to mark whether all indices of list have been assigned
+        self.list_full = False
 
     def append(self, item):
-        pass
+        self.storage[self.current_index] = item
+        if self.current_index < self.capacity - 1:
+            self.current_index += 1
+        else:
+            self.current_index = 0
+            self.list_full = True
 
     def get(self):
-        pass
+        # list_full allows us to simply return storage if it is full, else it loops through the list to only include
+        # non None values
+        if self.list_full:
+            return self.storage
+        else:
+            return [item for item in self.storage if item]
+
+
+# This is as efficient as using a linked list because we never delete from storage and we keep track of the index
+# so the runtime is constant.
